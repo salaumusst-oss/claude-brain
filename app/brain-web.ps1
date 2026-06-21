@@ -126,6 +126,7 @@ $html = @'
   <button onclick="showTab('handoff',this)">Handoff</button>
   <button onclick="showTab('inbox',this)">Inbox</button>
   <button onclick="showTab('memory',this)">Memory</button>
+  <button onclick="showTab('collab',this)">Collaborate</button>
   <button onclick="showTab('git',this)">Git Log</button>
 </nav>
 
@@ -179,6 +180,29 @@ $html = @'
 <div class="tab" id="tab-memory">
   <div class="section-title">Shared Memory Files</div>
   <div id="memoryList">Loading…</div>
+</div>
+
+<!-- COLLABORATE -->
+<div class="tab" id="tab-collab">
+  <div class="cards">
+    <div class="card"><div class="card-label">OTHER MACHINE</div><div class="card-value" id="collabOtherName">—</div><div class="card-sub" id="collabOtherStatus">checking...</div></div>
+    <div class="card"><div class="card-label">ACTIVE TASKS</div><div class="card-value" id="collabTaskCount">—</div><div class="card-sub">in task queue</div></div>
+  </div>
+  <div class="section-title">Dispatch a Collaborative Task</div>
+  <p class="muted" style="margin-bottom:12px">Describe what you want built. If the other machine is online, it will automatically pick up half the work.</p>
+  <label>Task description</label>
+  <textarea id="collabTask" rows="3" placeholder="e.g. Build a user authentication system with JWT tokens"></textarea>
+  <label>Relevant files / context (optional)</label>
+  <input id="collabContext" placeholder="e.g. src/app.ts, package.json">
+  <br><br>
+  <div class="flex">
+    <button class="btn" onclick="dispatchTask()">Dispatch Task</button>
+    <button class="btn btn-muted" onclick="loadCollabStatus()">↻ Refresh</button>
+    <span id="collabMsg" class="muted" style="margin-left:12px"></span>
+  </div>
+  <br>
+  <div class="section-title">Task Queue</div>
+  <div id="collabTaskList">Loading…</div>
 </div>
 
 <!-- GIT LOG -->
@@ -290,6 +314,30 @@ async function loadGit(){
   document.getElementById('gitLog').textContent=await r.text();
 }
 
+async function loadCollabStatus(){
+  const s=await api('/status');
+  document.getElementById('collabOtherName').textContent=s.otherMachine||'—';
+  document.getElementById('collabOtherStatus').textContent=s.otherOnline==='online'?'ONLINE - will receive tasks':'OFFLINE - solo mode';
+  document.getElementById('collabOtherName').style.color=s.otherOnline==='online'?'var(--green)':'var(--red)';
+  document.getElementById('collabTaskCount').textContent=s.activeTasks||0;
+  const r=await fetch('/collab-status');
+  document.getElementById('collabTaskList').innerHTML=await r.text();
+}
+
+async function dispatchTask(){
+  const task=document.getElementById('collabTask').value.trim();
+  const ctx=document.getElementById('collabContext').value.trim();
+  if(!task){document.getElementById('collabMsg').textContent='Enter a task first.';return;}
+  document.getElementById('collabMsg').textContent='Dispatching...';
+  try{
+    const r=await api('/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task,context:ctx})});
+    document.getElementById('collabMsg').textContent=r.mode==='split'?'Split task dispatched to both machines!':'Solo task dispatched (other machine offline).';
+    document.getElementById('collabTask').value='';
+    loadCollabStatus();
+    log('Task dispatched: '+task);
+  }catch(e){document.getElementById('collabMsg').textContent='Error: '+e;}
+}
+
 // Init
 loadStatus(); loadHandoff();
 setInterval(()=>{loadStatus(); loadHandoff();}, 15000);
@@ -338,8 +386,31 @@ while ($listener.IsListening) {
                 $gitSt = try { $s = & git -C $BRAIN_DIR status --porcelain 2>&1; if ($s) {"unsynced"} else {"clean"} } catch {"unknown"}
                 $last = try { & git -C $BRAIN_DIR log -1 --format="%ci" 2>&1 } catch { "unknown" }
                 $inbox = (Get-ChildItem "$BRAIN_DIR/inbox" -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne "README.md" }).Count
-                $json = @{ status=$gitSt; lastCommit=$last; machine=$MACHINE_NAME; inbox=$inbox } | ConvertTo-Json
+                # Check other machine online status
+                $otherOnline = "offline"; $otherMachine = ""
+                $beats = Get-ChildItem "$BRAIN_DIR/heartbeat" -Filter "*.json" -ErrorAction SilentlyContinue | Where-Object { $_.BaseName -ne $MACHINE_NAME }
+                $now = [int][double]::Parse((Get-Date -UFormat %s))
+                foreach ($b in $beats) {
+                    try {
+                        $d = Get-Content $b.FullName | ConvertFrom-Json
+                        if (($now - $d.epoch) -lt 120) { $otherOnline = "online"; $otherMachine = $d.machine; break }
+                    } catch {}
+                }
+                # Active tasks
+                $activeTasks = (Get-ChildItem "$BRAIN_DIR/tasks" -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch "README|MERGED" }).Count
+                $json = @{ status=$gitSt; lastCommit=$last; machine=$MACHINE_NAME; inbox=$inbox; otherOnline=$otherOnline; otherMachine=$otherMachine; activeTasks=$activeTasks } | ConvertTo-Json
                 Send-Response $ctx $json "application/json"
+            }
+            "GET /collab-status" {
+                $tasks = Get-ChildItem "$BRAIN_DIR/tasks" -Filter "*.md" -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch "README" } | Sort-Object LastWriteTime -Descending
+                $html = if ($tasks) {
+                    ($tasks | ForEach-Object {
+                        $state = if ($_.Name -match "pending") {"pending"} elseif ($_.Name -match "active") {"active"} elseif ($_.Name -match "done") {"done"} elseif ($_.Name -match "MERGED") {"merged"} else {"unknown"}
+                        $color = @{pending="var(--yellow)";active="var(--accent)";done="var(--green)";merged="var(--green)";unknown="var(--muted)"}[$state]
+                        "<div class='card' style='margin-bottom:8px'><span style='color:$color;font-weight:700'>[$state]</span> $($_.Name)<div class='card-sub'>$($_.LastWriteTime)</div></div>"
+                    }) -join ""
+                } else { "<p class='muted'>No active tasks.</p>" }
+                Send-Response $ctx $html
             }
             "GET /handoff" {
                 $h = if (Test-Path "$BRAIN_DIR/handoff/current.md") { Get-Content "$BRAIN_DIR/handoff/current.md" -Raw } else { "No handoff." }
@@ -417,6 +488,84 @@ $($body.message)
             "GET /git-log" {
                 $log = try { & git -C $BRAIN_DIR log --oneline -20 2>&1 | Out-String } catch { "git unavailable" }
                 Send-Response $ctx $log "text/plain"
+            }
+            "POST /dispatch" {
+                $body = Read-Body $ctx | ConvertFrom-Json
+                $task = $body.task
+                $context = $body.context
+
+                # Check if other machine online
+                $beats = Get-ChildItem "$BRAIN_DIR/heartbeat" -Filter "*.json" -ErrorAction SilentlyContinue | Where-Object { $_.BaseName -ne $MACHINE_NAME }
+                $now = [int][double]::Parse((Get-Date -UFormat %s))
+                $otherMachine = $null
+                foreach ($b in $beats) {
+                    try {
+                        $d = Get-Content $b.FullName | ConvertFrom-Json
+                        if (($now - $d.epoch) -lt 120) { $otherMachine = $d.machine; break }
+                    } catch {}
+                }
+
+                $ts = Get-Date -Format "yyyyMMdd-HHmmss"
+
+                if ($otherMachine) {
+                    # Split mode — write remote task
+                    $remoteFile = "$BRAIN_DIR/tasks/$ts-$otherMachine-pending.md"
+                    @"
+---
+id: $ts
+from: $MACHINE_NAME
+to: $otherMachine
+mode: split-remote
+status: pending
+task: $task
+context_files: $context
+created: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+---
+
+# Remote Task
+
+You are the REMOTE Claude instance. LOCAL instance ($MACHINE_NAME) is handling the other half.
+
+## Your job
+$task
+
+### Split responsibility
+- You handle: research, planning, backend/data/API work
+- Local handles: implementation, UI, and assembly
+
+Context files: $context
+
+Write your complete findings after a line that says: ## RESULT
+"@ | Set-Content $remoteFile -Encoding UTF8
+                    & git -C $BRAIN_DIR add -A 2>&1 | Out-Null
+                    & git -C $BRAIN_DIR commit -m "task: dispatched $ts to $otherMachine" 2>&1 | Out-Null
+                    & git -C $BRAIN_DIR push origin main 2>&1 | Out-Null
+                    Send-Response $ctx (@{ mode="split"; taskId=$ts; remote=$otherMachine } | ConvertTo-Json) "application/json"
+                } else {
+                    # Solo mode
+                    $soloFile = "$BRAIN_DIR/tasks/$ts-$MACHINE_NAME-solo.md"
+                    @"
+---
+id: $ts
+machine: $MACHINE_NAME
+mode: solo
+status: pending
+task: $task
+context_files: $context
+created: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+---
+
+# Solo Task (other machine offline)
+
+$task
+
+Context: $context
+"@ | Set-Content $soloFile -Encoding UTF8
+                    & git -C $BRAIN_DIR add -A 2>&1 | Out-Null
+                    & git -C $BRAIN_DIR commit -m "task: solo $ts" 2>&1 | Out-Null
+                    & git -C $BRAIN_DIR push origin main 2>&1 | Out-Null
+                    Send-Response $ctx (@{ mode="solo"; taskId=$ts } | ConvertTo-Json) "application/json"
+                }
             }
             default {
                 $ctx.Response.StatusCode = 404

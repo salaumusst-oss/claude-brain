@@ -1,64 +1,63 @@
 # Claude Brain — AI Instructions
 
-You are connected to a shared brain system. Two Claude Code instances (PC + Laptop) share this repo.
-Read this at the start of every session.
+You are connected to a shared brain system. Two Claude Code instances (PC + MacBook) share this repo.
+Read this every session start.
 
-## Your identity this session
-- Machine: check `app/config.json` → `machineName`
+## Your identity
+- Machine: read `app/config.json` → `machineName`
 - Brain dir: `C:\Users\musst\claude-brain` (Windows) or `~/claude-brain` (Mac)
 
-## First thing every session
-1. Run sync: `powershell -File sync.ps1` (Windows) or `bash sync.sh` (Mac)
-2. Read `handoff/current.md` — if status is `active` and `to` matches this machine, pick up from there
-3. Check `inbox/` for any messages from the other instance
+## Session start checklist
+1. Run: `git -C C:\Users\musst\claude-brain pull`
+2. Read `handoff/current.md` — if status is `active` and `to` matches this machine, continue that task
+3. Check `inbox/` for messages
+4. Check `tasks/` for any `*-MACHINENAME-pending.md` files (shouldn't happen if watcher is running)
 
-## Last thing every session
-1. If switching machines: write a handoff to `handoff/current.md` (use the template)
-2. Sync runs automatically via the Stop hook
+## When the user gives you a task
+
+### Step 1 — Check if other machine is online
+```powershell
+powershell -File C:\Users\musst\claude-brain\scripts\check-online.ps1
+```
+Returns `online:MACHINENAME` or `offline`.
+
+### Step 2A — Other machine is ONLINE → Split mode
+```powershell
+powershell -File C:\Users\musst\claude-brain\scripts\dispatch.ps1 -Task "the task" -ContextFiles "relevant files"
+```
+The dispatch script returns your local instructions. Follow them.
+- You handle: implementation, UI, assembly
+- Remote handles: research, planning, backend/data
+
+When your local half is done, merge:
+```powershell
+powershell -File C:\Users\musst\claude-brain\scripts\merge-results.ps1 -TaskId "ID" -LocalResult "your output here"
+```
+
+### Step 2B — Other machine is OFFLINE → Solo mode
+Handle everything yourself. Write result to:
+`C:\Users\musst\claude-brain\inbox\TIMESTAMP-MACHINENAME-result.md`
+Then sync.
 
 ## Memory
-- All persistent memory lives in `memory/` — treat this as the source of truth
-- When saving a new memory, write it to `memory/filename.md` (not to ~/.claude/projects/.../memory/)
-- Update `memory/MEMORY.md` index whenever you add a file
+- All memory lives in `memory/` — write new memory files there
+- Update `memory/MEMORY.md` index when adding files
 
-## Two-instance collaboration
-When working with the other instance simultaneously:
-- Write your subtask result to `inbox/TIMESTAMP-MACHINENAME.md`
-- Call sync so the other instance can pull it
-- After the other instance pushes its result, pull and merge both outputs
-- Delete inbox messages after reading
-
-## Handoff format
-```
----
-from: MACHINENAME
-to: OTHERMACHINE
-timestamp: YYYY-MM-DD HH:MM
-status: active | idle
----
-
-# Current Handoff
-
-## Task
-What we're building
-
-## Context
-Key details
-
-## Files touched
-- path/to/file
-
-## Next steps
-- [ ] step 1
-- [ ] step 2
+## Sync command
+```powershell
+powershell -NonInteractive -File C:\Users\musst\claude-brain\sync.ps1 "reason"
 ```
 
 ## Collaboration split patterns
-- **Research + Build**: Instance A researches/gathers info → posts to inbox → Instance B implements
-- **Frontend + Backend**: Each handles its layer → merge
-- **Draft + Review**: Instance A writes → Instance B critiques and improves
-- **Parallel exploration**: Both explore different approaches → compare in inbox → pick best
+| Pattern | Local does | Remote does |
+|---|---|---|
+| Research + Build | Build/implement | Research, gather info |
+| Frontend + Backend | Frontend/UI | Backend/API/data |
+| Draft + Review | Draft | Review and improve |
+| Parallel explore | Approach A | Approach B |
 
-## Sync command
-- Windows: `powershell -NonInteractive -File C:\Users\musst\claude-brain\sync.ps1 "reason"`
-- Mac: `bash ~/claude-brain/sync.sh "reason"`
+## Important rules
+- ALWAYS check if other machine is online before starting a complex task
+- NEVER wait idle for remote — start your half immediately, merge when remote finishes
+- If remote times out (5 min), deliver local result and note remote was unavailable
+- Write all task outputs to the tasks/ directory so both machines can see them
