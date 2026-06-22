@@ -2608,3 +2608,5 @@ error: please commit or stash them.
 To github.com:salaumusst-oss/claude-brain.git
  ! [remote rejected]   main -> main (cannot lock ref 'refs/heads/main': is at 0fca1ec0c0d2d481c1ebe57e40d2baa2643a9a96 but expected e024cce4b1dfb080c5f417757b5e0c2e739f4eeb)
 error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+From github.com:salaumusst-oss/claude-brain
+ * branch              main       -> FETCH_HEAD
