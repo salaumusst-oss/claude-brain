@@ -1,4 +1,4 @@
-# Claude Brain Sync — run this to push/pull shared memory
+﻿# Claude Brain Sync â€” run this to push/pull shared memory
 param(
     [string]$Message = "sync"
 )
@@ -7,7 +7,7 @@ $BrainDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 Set-Location $BrainDir
 
-git pull --rebase origin main 2>&1 | Write-Host
+git pull origin main 2>&1 | Write-Host
 
 $status = git status --porcelain
 if ($status) {
@@ -18,3 +18,4 @@ if ($status) {
 } else {
     Write-Host "Brain up to date." -ForegroundColor Cyan
 }
+
