@@ -61,7 +61,15 @@ Complete your assigned work. When done write your FULL results after a line that
 
     local RESULT=""
     if command -v claude &>/dev/null; then
-        RESULT=$(claude --print "$CLAUDE_PROMPT" 2>&1)
+        # Write prompt to temp file and pipe it in to force non-interactive mode
+        local PROMPT_FILE="$BRAIN_DIR/tasks/$ID-prompt.txt"
+        printf '%s' "$CLAUDE_PROMPT" > "$PROMPT_FILE"
+        RESULT=$(echo "$CLAUDE_PROMPT" | claude --print 2>&1)
+        if [ -z "$RESULT" ] || echo "$RESULT" | grep -q "logged in\|interactive"; then
+            # Fallback: use -p with input file
+            RESULT=$(claude -p "$(cat $PROMPT_FILE)" 2>&1)
+        fi
+        rm -f "$PROMPT_FILE"
     else
         RESULT="WAITING_FOR_MANUAL: claude CLI not found. Install with: npm install -g @anthropic-ai/claude-code"
         log "WARNING: claude CLI not found."
