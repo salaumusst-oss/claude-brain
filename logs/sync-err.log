@@ -1462,3 +1462,8 @@ To github.com:salaumusst-oss/claude-brain.git
    98cc915..d9e6b6d  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at 18849d51112960d8c792b96f5b8e427aa8ff0dc9 but expected d10ed8d4d1efa69430f4f3ead76a7ed4f5605346)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
