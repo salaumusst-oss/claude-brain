@@ -4,7 +4,7 @@
 
 BRAIN_DIR="${1:-$HOME/claude-brain}"
 MY_MACHINE=$(hostname -s)
-POLL_INTERVAL=15
+POLL_INTERVAL=30
 
 log() { echo "[$(date '+%H:%M:%S')] $1"; }
 
@@ -85,16 +85,27 @@ Complete your assigned work. When done write your FULL results after a line that
 log "Watcher started on $MY_MACHINE. Polling every ${POLL_INTERVAL}s..."
 
 while true; do
-    # Pull latest
-    git -C "$BRAIN_DIR" pull 2>/dev/null
+    # Pull latest silently
+    git -C "$BRAIN_DIR" pull --quiet 2>/dev/null
 
     # Find pending tasks for this machine
     for task in "$BRAIN_DIR/tasks/"*"-$MY_MACHINE-pending.md"; do
         [ -f "$task" ] && process_task "$task"
     done
 
-    # Heartbeat
-    write_heartbeat
+    # Heartbeat (silent)
+    EPOCH=$(date +%s)
+    cat > "$BRAIN_DIR/heartbeat/$MY_MACHINE.json" <<EOF
+{
+  "machine": "$MY_MACHINE",
+  "timestamp": "$(date '+%Y-%m-%d %H:%M:%S')",
+  "epoch": $EPOCH,
+  "platform": "mac"
+}
+EOF
+    git -C "$BRAIN_DIR" add "heartbeat/$MY_MACHINE.json" 2>/dev/null
+    git -C "$BRAIN_DIR" commit --quiet -m "heartbeat: $MY_MACHINE" 2>/dev/null
+    git -C "$BRAIN_DIR" push --quiet origin main 2>/dev/null
 
     sleep $POLL_INTERVAL
 done
