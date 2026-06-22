@@ -89,7 +89,7 @@ while true; do
     git -C "$BRAIN_DIR" pull 2>/dev/null
 
     # Find pending tasks for this machine
-    for task in "$BRAIN_DIR/tasks/"*"-$MY_MACHINE-pending.md" 2>/dev/null; do
+    for task in "$BRAIN_DIR/tasks/"*"-$MY_MACHINE-pending.md"; do
         [ -f "$task" ] && process_task "$task"
     done
 
