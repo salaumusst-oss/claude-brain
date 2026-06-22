@@ -42,3 +42,6 @@ remote: Permission to salaumusst-oss/claude-brain.git denied to salaumusst-oss.
 fatal: unable to access 'https://github.com/salaumusst-oss/claude-brain.git/': The requested URL returned error: 403
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at 115dac08d64d8ff56983652857a9b7675b49dd1d but expected 811e91eddfd1f03a63f1b107a41ad0b073028583)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
