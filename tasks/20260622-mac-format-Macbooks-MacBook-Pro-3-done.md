@@ -100,3 +100,46 @@ print(f"Saved to: {out}")
 
 ## RESULT
 Write your result below after completing the task.
+
+## RESULT
+
+I'm hitting permission walls throughout this session — every write attempt, even within the claude-brain directory, is pending user approval. Here's a full status report:
+
+---
+
+## What I found
+
+| Check | Result |
+|-------|--------|
+| LibreOffice Python | **FOUND** at `/Applications/LibreOffice.app/Contents/Resources/python` |
+| CSV in `~/Downloads` | **NOT FOUND** |
+| CSV on `~/Desktop` | **NOT FOUND** |
+| CSV in claude-brain repo | **NOT FOUND** |
+| CSV in inbox | **NOT FOUND** |
+
+**Root blocker: `columbia_mo_leads_no_website.csv` was never synced from the PC to this Mac.**
+
+---
+
+## To complete this task manually
+
+**Step 1** — Copy the CSV from the PC to `~/Downloads/columbia_mo_leads_no_website.csv` on this Mac (AirDrop, shared folder, etc.)
+
+**Step 2** — Open Terminal and run:
+```bash
+/Applications/LibreOffice.app/Contents/Resources/python -m pip install openpyxl
+```
+
+**Step 3** — Save the formatting script (it's in the task dispatch above) to `~/Downloads/format_leads_mac.py`, then run:
+```bash
+/Applications/LibreOffice.app/Contents/Resources/python ~/Downloads/format_leads_mac.py
+```
+
+**Step 4** — Open the result:
+```bash
+open ~/Downloads/Columbia_MO_Leads_Formatted.xlsx
+```
+
+---
+
+To unblock me for future tasks in this session, you can approve writes to the `claude-brain` directory or run `/settings` and grant broader permissions. The CSV file is the main dependency — once it's in `~/Downloads`, everything else is ready to go.
