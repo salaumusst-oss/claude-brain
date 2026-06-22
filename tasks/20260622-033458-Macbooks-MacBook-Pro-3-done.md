@@ -25,3 +25,7 @@ none
 
 ## Output
 Write your complete findings after a line that says: ## RESULT
+
+## RESULT
+
+Not logged in · Please run /login
