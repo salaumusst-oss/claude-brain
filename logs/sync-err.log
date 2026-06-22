@@ -16,3 +16,7 @@ remote: Permission to salaumusst-oss/claude-brain.git denied to salaumusst-oss.
 fatal: unable to access 'https://github.com/salaumusst-oss/claude-brain.git/': The requested URL returned error: 403
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+remote: Permission to salaumusst-oss/claude-brain.git denied to salaumusst-oss.
+fatal: unable to access 'https://github.com/salaumusst-oss/claude-brain.git/': The requested URL returned error: 403
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
