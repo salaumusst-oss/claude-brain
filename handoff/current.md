@@ -1,22 +1,17 @@
----
-from: 
-to: 
-timestamp: 
-status: idle
+﻿---
+from: DESKTOP-JG30HPB
+to: Macbooks-MacBook-Pro-3
+timestamp: 2026-06-22 03:19
+status: active
 ---
 
-# Current Handoff
-
-No active handoff. Both instances idle.
+# Test Handoff
 
 ## Task
-_none_
+Testing the handoff system
 
 ## Context
-_none_
-
-## Files touched
-_none_
+This is a test
 
 ## Next steps
-_none_
+- [ ] Verify handoff shows on Mac
