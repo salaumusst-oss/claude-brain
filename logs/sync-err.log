@@ -47,3 +47,7 @@ To github.com:salaumusst-oss/claude-brain.git
 error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
 From github.com:salaumusst-oss/claude-brain
  * branch            main       -> FETCH_HEAD
+To github.com:salaumusst-oss/claude-brain.git
+   8216b4b..3de6efb  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
