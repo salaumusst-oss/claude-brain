@@ -3326,3 +3326,7 @@ remove the file manually to continue.
 Everything up-to-date
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   564ec124..2aa4b1f1  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
