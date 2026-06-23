@@ -3452,3 +3452,7 @@ To github.com:salaumusst-oss/claude-brain.git
 error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   1f0a9d67..32bdac8a  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
