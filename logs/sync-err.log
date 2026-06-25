@@ -16394,3 +16394,26 @@ To github.com:salaumusst-oss/claude-brain.git
    434ddbfab..97e3cb069  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   b84e20988..43ea55116  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
+fatal: Unable to create '/Users/macbook25/claude-brain/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create '/Users/macbook25/claude-brain/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected]     main -> main (cannot lock ref 'refs/heads/main': is at d9ac9f1fd6716d722aec98c7542de80e5e335750 but expected 8abc98356f107ff47ffeba8ef5d631b18da1fbdb)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
