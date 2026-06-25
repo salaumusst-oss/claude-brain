@@ -13109,3 +13109,7 @@ hint: 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   fcc951714..04804a4ae  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
