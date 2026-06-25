@@ -13100,3 +13100,12 @@ To github.com:salaumusst-oss/claude-brain.git
    567919a1d..386b54d68  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+ ! [rejected]            main -> main (non-fast-forward)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
