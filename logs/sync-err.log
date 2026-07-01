@@ -30569,3 +30569,5 @@ From github.com:salaumusst-oss/claude-brain
  * branch                main       -> FETCH_HEAD
 error: cannot rebase: You have unstaged changes.
 error: Please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   fbc082ba0..6093a1b63  main -> main
