@@ -30555,3 +30555,7 @@ To github.com:salaumusst-oss/claude-brain.git
    99af6ebad..def20ff2a  main -> main
 From github.com:salaumusst-oss/claude-brain
  * branch                main       -> FETCH_HEAD
+To github.com:salaumusst-oss/claude-brain.git
+   e00c6ea68..0dfc91761  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
