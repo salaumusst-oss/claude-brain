@@ -40946,3 +40946,9 @@ Please make sure you have the correct access rights
 and the repository exists.
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+Connection to github.com closed by remote host.
+client_loop: send disconnect: Broken pipe
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
