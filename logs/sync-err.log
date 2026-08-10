@@ -151996,3 +151996,9 @@ To github.com:salaumusst-oss/claude-brain.git
    4bbea1668..12adf329d  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+Read from remote host github.com: Connection reset by peer
+client_loop: send disconnect: Broken pipe
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
