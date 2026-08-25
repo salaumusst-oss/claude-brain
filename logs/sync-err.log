@@ -173703,3 +173703,8 @@ To github.com:salaumusst-oss/claude-brain.git
    4c3ca87b3..f17951d49  main -> main
 From github.com:salaumusst-oss/claude-brain
  * branch                main       -> FETCH_HEAD
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected]     main -> main (cannot lock ref 'refs/heads/main': is at d6ae6bf6f467ce2619ac844e9bfbc1c75471143f but expected 7fed4e7f0cb63fd6ace17af519a0ea19756da5d1)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
