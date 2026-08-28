@@ -186155,3 +186155,11 @@ To github.com:salaumusst-oss/claude-brain.git
    d7795c6170..87061351c2  main -> main
 From github.com:salaumusst-oss/claude-brain
  * branch                  main       -> FETCH_HEAD
+remote: Internal Server Error        
+remote: Request ID F73D:CDF86:80A70:A5191:6A90FD35        
+remote: Time 2026-08-28T03:15:23Z
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected]       main -> main (Internal Server Error)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
