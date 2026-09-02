@@ -201958,3 +201958,9 @@ To github.com:salaumusst-oss/claude-brain.git
    d6ceeed1b3..1a54344c8b  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
