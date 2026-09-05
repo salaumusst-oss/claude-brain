@@ -208828,3 +208828,14 @@ error: cannot rebase: You have unstaged changes.
 error: Please commit or stash them.
 To github.com:salaumusst-oss/claude-brain.git
    4d9eb37b4d..e81c714856  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
+fatal: Unable to create '/Users/macbook25/claude-brain/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+To github.com:salaumusst-oss/claude-brain.git
+   e81c714856..643d3ec583  main -> main
