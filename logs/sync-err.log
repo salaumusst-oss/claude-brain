@@ -212163,3 +212163,7 @@ To github.com:salaumusst-oss/claude-brain.git
    23bc91bc87..0c399d923c  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   0c399d923c..c274d92f8c  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
