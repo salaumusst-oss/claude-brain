@@ -287097,3 +287097,11 @@ To github.com:salaumusst-oss/claude-brain.git
    7da4a79268..0f227e44c2  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+remote: Internal Server Error        
+remote: Request ID E5D8:287161:615032:8B0411:6AB3ECDC        
+remote: Time 2026-09-23T15:14:42Z
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected]       main -> main (Internal Server Error)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
