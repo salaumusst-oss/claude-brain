@@ -313218,3 +313218,7 @@ Please make sure you have the correct access rights
 and the repository exists.
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   66d2edc7c2..67f5551af7  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
