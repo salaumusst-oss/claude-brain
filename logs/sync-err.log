@@ -323711,3 +323711,5 @@ From github.com:salaumusst-oss/claude-brain
 fatal: Cannot rebase onto multiple branches.
 To github.com:salaumusst-oss/claude-brain.git
    7b54cef860..29daf935fe  main -> main
+From github.com:salaumusst-oss/claude-brain
+ * branch                  main       -> FETCH_HEAD
