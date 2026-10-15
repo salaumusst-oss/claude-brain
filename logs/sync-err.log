@@ -344757,3 +344757,9 @@ To github.com:salaumusst-oss/claude-brain.git
    ad3610a06f..e2e93a75b7  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+remote: fatal error in commit_refs        
+To github.com:salaumusst-oss/claude-brain.git
+ ! [remote rejected]       main -> main (failure)
+error: failed to push some refs to 'github.com:salaumusst-oss/claude-brain.git'
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
