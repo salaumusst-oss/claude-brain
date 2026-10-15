@@ -343396,3 +343396,14 @@ To github.com:salaumusst-oss/claude-brain.git
    15526fa7f1..d493b04580  main -> main
 From github.com:salaumusst-oss/claude-brain
  * branch                  main       -> FETCH_HEAD
+fatal: Unable to create '/Users/macbook25/claude-brain/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+To github.com:salaumusst-oss/claude-brain.git
+   6b2036154d..b7f0a4945f  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
