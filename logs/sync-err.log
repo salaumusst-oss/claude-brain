@@ -360671,3 +360671,7 @@ fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.
+From github.com:salaumusst-oss/claude-brain
+ * branch                  main       -> FETCH_HEAD
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
