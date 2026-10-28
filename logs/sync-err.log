@@ -381337,3 +381337,7 @@ send-pack: unexpected disconnect while reading sideband packet
 fatal: the remote end hung up unexpectedly
 From github.com:salaumusst-oss/claude-brain
  * branch                  main       -> FETCH_HEAD
+To github.com:salaumusst-oss/claude-brain.git
+   c1e009faf4..28e35bedf2  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
