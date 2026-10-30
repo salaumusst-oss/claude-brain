@@ -383638,3 +383638,7 @@ send-pack: unexpected disconnect while reading sideband packet
 fatal: the remote end hung up unexpectedly
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+To github.com:salaumusst-oss/claude-brain.git
+   0b206a6f6f..5dc58acf0b  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
