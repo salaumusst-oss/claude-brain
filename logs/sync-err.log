@@ -397946,3 +397946,10 @@ To github.com:salaumusst-oss/claude-brain.git
    27cbb01a4f..0d3ddd8a81  main -> main
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
+Connection closed by 140.82.113.4 port 22
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+error: cannot pull with rebase: You have unstaged changes.
+error: please commit or stash them.
